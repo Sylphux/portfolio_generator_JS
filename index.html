@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme_1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio generator</title>
+</head>
+<body>
+
+    <header>
+        <h1>Generate your portfolio</h1>
+        <p>And copy the HTML code to your clipboard !</p>
+        <button id="showdev" onclick="toggleDevTools()">Dev tools</button>
+        <button id="generate" onclick="generate()">Generate</button>
+        <button id="save" onclick="save()">Save progress</button>
+        <button id="save" onclick="copyCode()">Copy to clipboard</button>
+        <button id="switchtheme" onclick="switchTheme()">Switch theme</button>
+        <div id="devtools">
+            <div id="cookies">
+                <p id="cookieinfo"></p>
+                <button id ="deletecookies" onclick="deleteCookie('content')">Delete saved data (cookies)</button>
+            </div>
+        </div>
+    </header>
+    
+
+    <content>
+
+        
+
+        <div id="edit" class="part"> <!-- The edit part will be on the left and allows user to edit the portfolio -->
+            <h2>Edit section</h2>
+            <div id="editprofile">
+                <h3>Your profile section</h3>
+                <input placeholder="Your name" id="name"><br>
+                <input placeholder="Your email adress" id="email"><br>
+                <input placeholder="Your phone number" id="phone"><br>
+                <textarea placeholder="Tell us about you" id="description"></textarea><br>
+                <textarea placeholder="Your skills (separated with a comma)" id="skills"></textarea><br>
+            </div>
+        </div>
+
+
+        <div id="view" class="part"> <!-- The view part will be on the right and allows user to view changes -->
+            <h2>View section</h2>
+            <div id="viewcontent">
+                <div id="viewheader">
+                    <h1 id="viewname">Your name</h1>
+                    <p id="viewemail"></p>
+                    <p id="viewphone"></p>
+                    <p id="viewdescription"></p>
+                    <div id="viewskills">
+                        <p id="skill_"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </content>
+
+</body>
+<script src="script.js"></script>
+</html>
