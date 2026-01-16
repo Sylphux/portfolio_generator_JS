@@ -69,6 +69,15 @@ function checkForCookies(){
   }
 }
 
+function toggleEdit(){
+  toggle = document.getElementById("edit")
+  if (toggle.style.display == "none") {
+    toggle.style.display = "block"
+  } else {
+    toggle.style.display = "none"
+  }
+}
+
 function toggleDevTools(){
   if (devTools.style.display == "none"){
     devTools.style.display = "block"
