@@ -97,10 +97,10 @@ function toggleDevTools(){
 }
 
 function save(){
+  generate(false)
   setCookie("content", content) // saves data to cookie
   checkForCookies() // changes the "no cookie saved" mention
-  generate(false)
-  checkUnsaved()
+  checkUnsaved() // changes the "no cookie saved" mention
 }
 
 //Main functions
@@ -118,15 +118,29 @@ function doSkillsList(){ // generates the skills list ul from a string with comm
   }
 }
 
-//Generate the view portofolio from data
+function doExperiencesList(){ //only writes in content var for now. Not showing on view side.
+  let allExperiences = document.getElementById("experiences_list").children
+  for (let i = 0; i < allExperiences.length; i++){
+    let exp = allExperiences[i] // exp is my Node which i will save in the var content
+    let name = exp.children[0].value;
+    let place = exp.children[1].value;
+    let start = exp.children[2].children[0].value;
+    let end = exp.children[2].children[1].value;
+    let description = exp.children[3].value;
+    content.experiences[i] = [name, place, start, end, description]
+  }
+}
+
 function generate(savecheck = true){
   for (let key in content){
-    // Different treatments go here
     if (key == "skills"){
       doSkillsList()
       continue
     }
-    if (key == "experiences"){continue}
+    if (key == "experiences"){
+      doExperiencesList()
+      continue
+    }
     // 
     content[key] = document.getElementById(key).value
     document.getElementById("view" + key).innerHTML = content[key]
@@ -147,12 +161,47 @@ function checkUnsaved(){
   }
 }
 
+function assignDomExperienceContent(domExp, values = ["", "", "", "", ""]){
+  domExp.children[0].value = values[0] // name
+  domExp.children[1].value = values[1] // place
+  domExp.children[2].children[0].value = values[2] //start
+  domExp.children[2].children[1].value = values[3] // end
+  domExp.children[3].value = values[4] // description
+}
+
+function addExperienceTemplate(setID = undefined){
+  let template = document.getElementById("experience_0")
+  let newExperience = template.cloneNode(true)
+  if (setID === undefined){
+    newExperience.id = "experience_" + document.getElementById("experiences_list").children.length
+  } else {
+    newExperience.id = setID
+  }
+  document.getElementById("experiences_list").appendChild(newExperience)
+  assignDomExperienceContent(newExperience)
+}
+
+function loadExperiences(){
+  for (let i = 1; i < content.experiences.length; i++){
+    addExperienceTemplate()
+  }
+  let allDomExperiences = document.getElementById("experiences_list").children
+  for (let i in content.experiences){
+    let exp = allDomExperiences[i]
+    assignDomExperienceContent(exp, content.experiences[i])
+  }
+} 
+
 function loadData(){
+
   content = getCookie('content')
+  console.log("Experiences loaded : " + JSON.stringify(content.experiences))
+
   for (let key in content){
-    // put here ifs for cases where key is not a string and continue loop
-    if (key == "experiences"){continue}
-    //
+    if (key == "experiences"){ // create enough edit divs for the experiences
+      loadExperiences()
+      continue
+    }
     document.getElementById(key).value = content[key]
   }
   generate()
@@ -178,4 +227,4 @@ document.addEventListener('keydown', e => {
 
 if (checkForCookies()){
   loadData()
-}
+} else {console.log("No cookie to load. All set.")}

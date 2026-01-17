@@ -63,6 +63,13 @@ input:focus, textarea:focus {
     display: none;
 }
 
+#experiences_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1rem;
+}
+
 .experience_template {
     display: flex;
     background-color: rgb(213, 233, 233);
