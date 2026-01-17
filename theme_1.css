@@ -6,3 +6,76 @@
     padding: 1rem;
     background-color: white;
 }
+
+.keyword {
+    font-weight: bold;
+}
+
+#viewjob, #viewname {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#viewcontactinfo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 4px;
+}
+
+#viewcontactinfo p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.onlinepair {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 4px;
+}
+
+.justify {
+    text-align: justify;
+}
+
+#skillsul {
+    padding: 0;
+    display: flex;
+    gap: 4px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+#skillsul li {
+    background-color: rgb(48, 89, 122);
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: aliceblue;
+    border-radius: 4px;
+}
+
+.wherewhen * {
+    margin: 0px;
+}
+
+.view_experience_template {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+}
+
+.view_experience_template h3 {
+    margin-bottom: 4px;
+}
+
+.wherewhen {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: nowrap;
+}

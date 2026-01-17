@@ -23,6 +23,25 @@ content {
     justify-content: space-evenly;
 }
 
+input, textarea {
+    display: flex;
+    border-style: none;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    font-size: small;
+}
+
+input:focus, textarea:focus {
+    background-color: rgb(247, 247, 247);
+    outline: none;
+    
+}
+
 #edit {
     background-color: rgb(186, 211, 233);
 }
@@ -42,4 +61,23 @@ content {
 
 #deletecookies {
     display: none;
+}
+
+.experience_template {
+    display: flex;
+    background-color: rgb(213, 233, 233);
+    border-radius: 4px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 1rem;
+    margin: 0px;
+    border-left-style: solid;
+    border-color: rgb(56, 56, 56);
+}
+
+.twocol {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    justify-content: center;
 }

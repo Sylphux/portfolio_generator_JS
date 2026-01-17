@@ -30,31 +30,8 @@ function getCookie(cname) {
 function deleteCookie(name){
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   checkForCookies()
+  checkUnsaved()
 }
-
-//DOM declarations
-
-cookieInfo = document.getElementById("cookieinfo")
-devTools = document.getElementById("devtools")
-editName = document.getElementById("name")
-editEmail = document.getElementById("email")
-editPhone = document.getElementById("phone")
-editDescription = document.getElementById("description")
-editSkills = document.getElementById("skills")
-
-//Other variable declaration
-
-let content = {
-  name: "",
-  email: "",
-  phone: "",
-  description: "",
-  skills: ""
-}
-
-//Code
-
-function copyCode(){}
 
 function checkForCookies(){
   if (document.cookie != ""){
@@ -67,6 +44,39 @@ function checkForCookies(){
     document.getElementById("deletecookies").style.display = "none"
     return false
   }
+}
+
+function removeAllChilds(e){
+  while (e.hasChildNodes()){
+    e.removeChild(e.firstChild)
+  }
+}
+
+//DOM declarations
+
+cookieInfo = document.getElementById("cookieinfo")
+devTools = document.getElementById("devtools")
+
+//Other variable declaration
+
+let content = {
+  name: "",
+  job: "",
+  email: "",
+  phone: "",
+  description: "",
+  skills: "",
+  experiences: []
+}
+
+//Options functions
+
+function switchTheme(){
+  console.log("Switching view theme : To develop")
+}
+
+function copyCode(){
+  console.log("Copying view code to clipboard : To develop")
 }
 
 function toggleEdit(){
@@ -87,35 +97,84 @@ function toggleDevTools(){
 }
 
 function save(){
-  setCookie("content", content)
-  checkForCookies()
+  setCookie("content", content) // saves data to cookie
+  checkForCookies() // changes the "no cookie saved" mention
+  generate(false)
+  checkUnsaved()
 }
 
-function generate(){
+//Main functions
+
+function doSkillsList(){ // generates the skills list ul from a string with commas
+  content.skills = document.getElementById("skills").value
+  let skillsArr = content.skills.split(",")
+  let myList = document.getElementById("skillsul")
+  removeAllChilds(myList)
+  for (let i in skillsArr){
+    let skill = skillsArr[i]
+    const askill = document.createElement("li")
+    askill.innerText = skill
+    myList.appendChild(askill)
+  }
+}
+
+//Generate the view portofolio from data
+function generate(savecheck = true){
   for (let key in content){
+    // Different treatments go here
+    if (key == "skills"){
+      doSkillsList()
+      continue
+    }
+    if (key == "experiences"){continue}
+    // 
     content[key] = document.getElementById(key).value
     document.getElementById("view" + key).innerHTML = content[key]
   }
-  console.log(content)
+  if (savecheck === true){checkUnsaved()} // by default checks for unsaved changes
 }
 
-//auto generation of the view
-
-document.addEventListener('keypress', function(event) {
-    console.log('Key pressed: ' + event.key);
-    generate()
-});
-
-function loadData(){
-  content = getCookie('content')
-  console.log("accessing data in the cookie and putting it in content Object")
-  console.log(content)
-  for (let key in content){
-    document.getElementById(key).value = content[key]
+function checkUnsaved(){
+  p = document.getElementById("newchanges")
+  if (JSON.stringify(content) != JSON.stringify(getCookie('content'))){
+    p.innerHTML = "There are new changes to save."
+    p.style.color = "red"
+    console.log("Some content not saved")
+  } else {
+    console.log("All content is saved.")
+    p.innerHTML = "No changes to save."
+    p.style.color = "black"
   }
 }
 
-function applyContentToView(){}
+function loadData(){
+  content = getCookie('content')
+  for (let key in content){
+    // put here ifs for cases where key is not a string and continue loop
+    if (key == "experiences"){continue}
+    //
+    document.getElementById(key).value = content[key]
+  }
+  generate()
+}
+
+// Script to execute
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'Enter') {
+    e.preventDefault();
+    console.log("(ctrl+Enter)")
+    generate();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault();
+    console.log("(ctrl+s)")
+    save();
+  }
+});
 
 if (checkForCookies()){
   loadData()

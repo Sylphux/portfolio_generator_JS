@@ -13,11 +13,12 @@
         <h1>Generate your portfolio</h1>
         <p>And copy the HTML code to your clipboard !</p>
         <button id="showdev" onclick="toggleDevTools()">Dev tools</button>
-        <button id="generate" onclick="generate()">Generate</button>
-        <button id="save" onclick="save()">Save progress</button>
+        <button id="generate" onclick="generate()">Generate (ctrl+enter)</button>
+        <button id="save" onclick="save()">Save progress (ctrl+s)</button>
         <button id="save" onclick="copyCode()">Copy to clipboard</button>
         <button id="toggleedit" onclick="toggleEdit()">Toggle edit space</button>
         <button id="switchtheme" onclick="switchTheme()">Switch theme</button>
+        <p id="newchanges">No changes to save.</p>
         <div id="devtools">
             <div id="cookies">
                 <p id="cookieinfo"></p>
@@ -33,13 +34,38 @@
 
         <div id="edit" class="part"> <!-- The edit part will be on the left and allows user to edit the portfolio -->
             <h2>Edit section</h2>
+            <p><small>Hint : You can use HTML tags in your fields !</small></p>
             <div id="editprofile">
                 <h3>Your profile section</h3>
-                <input placeholder="Your name" id="name"><br>
-                <input placeholder="Your email adress" id="email"><br>
-                <input placeholder="Your phone number" id="phone"><br>
-                <textarea placeholder="Tell us about you" id="description"></textarea><br>
-                <textarea placeholder="Your skills (separated with a comma)" id="skills"></textarea><br>
+                <input placeholder="Your name" id="name">
+                <input placeholder="Your job" id="job">
+                <input placeholder="Your email adress" id="email">
+                <input placeholder="Your phone number" id="phone">
+                <textarea placeholder="Tell us about you" id="description"></textarea>
+                <textarea placeholder="Your skills (separated with a comma)" id="skills"></textarea>
+            </div>
+            <div id="editexperiences">
+
+
+                <h3>Your experiences and education</h3>
+
+
+                <div class="experience_template">
+                    <input placeholder="Experience name">
+                    <input placeholder="Place">
+                    <div class="twocol">
+                        <input placeholder="Start date">
+                        <input placeholder="End date">
+                    </div>
+                    <textarea placeholder="Describe your experience"></textarea>
+                </div><br>
+
+
+
+                <button onclick="addExperienceTemplate()">Add an experience</button>
+
+
+
             </div>
         </div>
 
@@ -49,13 +75,51 @@
             <div id="viewcontent">
                 <div id="viewheader">
                     <h1 id="viewname">Your name</h1>
-                    <p id="viewemail"></p>
-                    <p id="viewphone"></p>
-                    <p id="viewdescription"></p>
-                    <div id="viewskills">
-                        <p id="skill_"></p>
+                    <h2 id="viewjob">Vendeur de légumes</h2>
+
+                    <hr>
+
+                    <h3>Contact information</h3>
+                    <div id="viewcontactinfo">
+                        <div class="onlinepair">
+                            <p class="keyword">Email :</p>
+                            <p id="viewemail">youremail@mail.com</p>
+                        </div>
+                        <div class="onlinepair">
+                            <p class="keyword">Phone :</p>
+                            <p id="viewphone">00.00.00.00.00</p>
+                        </div>
+                    </div>
+
+                    <h3>Description</h3>
+                    <p id="viewdescription" class="justify">Vendeur de légumes dynamique et passionné par les produits frais, avec une solide expérience en accueil client, conseil et mise en valeur des produits. Polyvalent, j’assure la réception, le tri, la présentation et la vente directe en marché ou en magasin, tout en respectant les normes d’hygiène et de qualité. À l’écoute des clients, je propose des conseils personnalisés pour favoriser les ventes et fidéliser la clientèle.</p>
+
+                    <h3>Skills</h3>
+                    <small><ul id="skillsul">
+                        <li>yeslife</li>
+                        <li>yeslife</li>
+                        <li>yeslife</li>
+                    </ul></small>
+
+                    <hr>
+
+                </div>
+
+                <div id="viewcenter">
+                    <h2>Experiences</h2>
+                    <div id="viewexperiences">
+                        <div class="view_experience_template">
+                            <h3 id="job_">Senior manager - Freelance</h3>
+                            <div class="wherewhen">
+                                <p id="where_">NOOB Fundation Inc</p><p>|</p>
+                                <p><small id="from_">1999</small> - <small id="to_">2021</small></p>
+                            </div>
+                            <p id="content_" class="justify">Pilote stratégique d’un collectif d’innovation numérique underground, le NOOB Foundation Inc. — fondé en 1999 dans les sous-sols d’un cybercafé de Zurich — a révolutionné l’approche du travail libre en réinventant la notion de “freelance” comme mouvement culturel.</p>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
 
