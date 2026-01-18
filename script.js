@@ -1,8 +1,6 @@
+//Cookies functions
 
-//Utilitary functions
-
-function setCookie(cname, val, exdays = 365) {
-  // stringify value to json to keep objects
+function setCookie(cname, val, exdays = 365) { // auto stringify to keep objects in cookie
   cvalue = JSON.stringify(val)
   const d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -10,7 +8,7 @@ function setCookie(cname, val, exdays = 365) {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function getCookie(cname) {
+function getCookie(cname) { // auto parse to retrieve objects from cookie
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -20,7 +18,6 @@ function getCookie(cname) {
       c = c.substring(1);
     }
     if (c.indexOf(name) == 0) {
-      // auto json parse everything
       return JSON.parse(c.substring(name.length, c.length));
     }
   }
@@ -34,6 +31,7 @@ function deleteCookie(name){
 }
 
 function checkForCookies(){
+  let cookieInfo = document.getElementById("cookieinfo")
   if (document.cookie != ""){
     cookieInfo.innerHTML = "Cookies are stored.<br>"
     cookieInfo.innerHTML += document.cookie
@@ -46,30 +44,13 @@ function checkForCookies(){
   }
 }
 
-function removeAllChilds(e){
-  while (e.hasChildNodes()){
-    e.removeChild(e.firstChild)
+// General functions
+
+function removeAllChilds(e, i = 0){ // i is from which children all is removed
+  while (e.children.length > i){
+    e.removeChild(e.children[0 + i])
   }
 }
-
-//DOM declarations
-
-cookieInfo = document.getElementById("cookieinfo")
-devTools = document.getElementById("devtools")
-
-//Other variable declaration
-
-let content = {
-  name: "",
-  job: "",
-  email: "",
-  phone: "",
-  description: "",
-  skills: "",
-  experiences: []
-}
-
-//Options functions
 
 function switchTheme(){
   console.log("Switching view theme : To develop")
@@ -89,21 +70,37 @@ function toggleEdit(){
 }
 
 function toggleDevTools(){
-  if (devTools.style.display == "none"){
+  let devTools = document.getElementById("devtools")
+  if (devTools.style.display == "none" || devTools.style.display == ""){
     devTools.style.display = "block"
   } else {
     devTools.style.display = "none"
   }
 }
 
-function save(){
-  generate(false)
-  setCookie("content", content) // saves data to cookie
-  checkForCookies() // changes the "no cookie saved" mention
-  checkUnsaved() // changes the "no cookie saved" mention
+function toggleFullscreen(){
+  toggleEdit()
+  let header = document.getElementById("header")
+  let view = document.getElementById("view")
+  let cssContent = document.getElementById("content")
+  if (header.style.display == "block" || header.style.display == ""){
+    header.style.display = "none"
+    view.style.backgroundColor = "white"
+    cssContent.style.backgroundColor = "white"
+  } else {
+    header.style.display = "block"
+    view.style.backgroundColor = "rgb(213, 233, 233)";
+    cssContent.style.backgroundColor = "rgb(247, 247, 247)";
+  }
+  console.log("Fullscreen mode. Press ctrl+e to quit")
 }
 
-//Main functions
+function save(){
+  generate(false) 
+  setCookie("content", content) 
+  checkForCookies()
+  checkUnsaved()
+}
 
 function doSkillsList(){ // generates the skills list ul from a string with commas
   content.skills = document.getElementById("skills").value
@@ -118,20 +115,45 @@ function doSkillsList(){ // generates the skills list ul from a string with comm
   }
 }
 
+function addExperienceRender(setID = undefined){
+  let template = document.getElementById("viewexperience_0")
+  let newExperience = template.cloneNode(true)
+  if (setID === undefined){
+    newExperience.id = "viewexperience_" + document.getElementById("viewexperiences").children.length
+  } else {
+    newExperience.id = setID
+  }
+  document.getElementById("viewexperiences").appendChild(newExperience)
+  renderExperience(newExperience)
+}
+
+function renderExperience(domExp, values = ["", "", "", "", ""]){
+  domExp.children[0].innerHTML = values[0] // name
+  domExp.children[1].innerHTML = values[1] + " | " + "<small>" + values[2] + " - " + values[3] + "</small>" // place, start, end
+  domExp.children[2].innerHTML = values[4] // description
+}
+
 function doExperiencesList(){ //only writes in content var for now. Not showing on view side.
+  removeAllChilds(document.getElementById("viewexperiences"), 1)
   let allExperiences = document.getElementById("experiences_list").children
   for (let i = 0; i < allExperiences.length; i++){
-    let exp = allExperiences[i] // exp is my Node which i will save in the var content
-    let name = exp.children[0].value;
-    let place = exp.children[1].value;
-    let start = exp.children[2].children[0].value;
-    let end = exp.children[2].children[1].value;
-    let description = exp.children[3].value;
-    content.experiences[i] = [name, place, start, end, description]
+    // write in RAM (content object)
+    content.experiences[i] = [
+    allExperiences[i].children[0].value, // name
+    allExperiences[i].children[1].value, // place
+    allExperiences[i].children[2].children[0].value, // start 
+    allExperiences[i].children[2].children[1].value, // end
+    allExperiences[i].children[3].value] // description
+    // render on view
+    console.log(content.experiences[i])
+    if (JSON.stringify(content.experiences[i]) != JSON.stringify([ "", "", "", "", "" ])){
+      if (i != 0){addExperienceRender()}
+      renderExperience(document.getElementById(("viewexperience_" + i)), content.experiences[i])
+    }
   }
 }
 
-function generate(savecheck = true){
+function generate(savecheck = true){ // This function both renders the content AND saves it to the RAM
   for (let key in content){
     if (key == "skills"){
       doSkillsList()
@@ -141,10 +163,10 @@ function generate(savecheck = true){
       doExperiencesList()
       continue
     }
-    // 
     content[key] = document.getElementById(key).value
     document.getElementById("view" + key).innerHTML = content[key]
   }
+  console.log("Content generated.")
   if (savecheck === true){checkUnsaved()} // by default checks for unsaved changes
 }
 
@@ -182,32 +204,38 @@ function addExperienceTemplate(setID = undefined){
 }
 
 function loadExperiences(){
-  for (let i = 1; i < content.experiences.length; i++){
-    addExperienceTemplate()
-  }
-  let allDomExperiences = document.getElementById("experiences_list").children
   for (let i in content.experiences){
-    let exp = allDomExperiences[i]
+    if (i != 0){addExperienceTemplate()}
+    let exp = document.getElementById("experiences_list").children[i]
     assignDomExperienceContent(exp, content.experiences[i])
   }
 } 
 
+// the loadData function loads everything from the cookie on the edit side components, and then launches generate to render and save in ram.
 function loadData(){
-
-  content = getCookie('content')
-  console.log("Experiences loaded : " + JSON.stringify(content.experiences))
-
+  content = getCookie('content') // loads cookie in ram
   for (let key in content){
-    if (key == "experiences"){ // create enough edit divs for the experiences
+    if (key == "experiences"){
       loadExperiences()
       continue
     }
     document.getElementById(key).value = content[key]
   }
+  console.log("Data loaded from cookie.")
   generate()
 }
 
-// Script to execute
+// RUNNING CODE
+
+let content = {
+  name: "",
+  job: "",
+  email: "",
+  phone: "",
+  description: "",
+  skills: "",
+  experiences: []
+}
 
 document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.key === 'Enter') {
@@ -222,6 +250,14 @@ document.addEventListener('keydown', e => {
     e.preventDefault();
     console.log("(ctrl+s)")
     save();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'e') {
+    e.preventDefault();
+    console.log("(ctrl+e)")
+    toggleFullscreen();
   }
 });
 

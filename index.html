@@ -8,16 +8,16 @@
     <title>Portfolio generator</title>
 </head>
 <body>
-
-    <header>
+    <header id="header">
         <h1>Generate your portfolio</h1>
         <p>And copy the HTML code to your clipboard !</p>
         <button id="showdev" onclick="toggleDevTools()">Dev tools</button>
         <button id="generate" onclick="generate()">Generate (ctrl+enter)</button>
-        <button id="save" onclick="save()">Save progress (ctrl+s)</button>
-        <button id="save" onclick="copyCode()">Copy to clipboard</button>
+        <button id="save" onclick="save()">Save progress (ctrl+S)</button>
+        <!-- <button id="copycode" onclick="copyCode()">Copy to clipboard</button> -->
+        <!-- <button id="switchtheme" onclick="switchTheme()">Switch theme</button> -->
+        <button id="fullscreen" onclick="toggleFullscreen()">Fullscreen (ctrl+E)</button>
         <button id="toggleedit" onclick="toggleEdit()">Toggle edit space</button>
-        <button id="switchtheme" onclick="switchTheme()">Switch theme</button>
         <p id="newchanges">No changes to save.</p>
         <div id="devtools">
             <div id="cookies">
@@ -26,12 +26,7 @@
             </div>
         </div>
     </header>
-    
-
-    <content>
-
-        
-
+    <content id="content">
         <div id="edit" class="part"> <!-- The edit part will be on the left and allows user to edit the portfolio -->
             <h2>Edit section</h2>
             <p><small>Hint : You can use HTML tags in your fields !</small></p>
@@ -45,12 +40,8 @@
                 <textarea placeholder="Your skills (separated with a comma)" id="skills"></textarea>
             </div>
             <div id="editexperiences">
-
-
                 <h3>Your experiences and education</h3>
-
                 <div id="experiences_list">
-
                     <div id="experience_0" class="experience_template">
                         <input placeholder="Experience name">
                         <input placeholder="Place">
@@ -60,28 +51,17 @@
                         </div>
                         <textarea placeholder="Describe your experience"></textarea>
                     </div>
-
                 </div>
-
-
-
                 <br><button onclick="addExperienceTemplate()">Add an experience</button>
-
-
-
             </div>
         </div>
-
-
         <div id="view" class="part"> <!-- The view part will be on the right and allows user to view changes -->
-            <h2>View section</h2>
+            <!-- <h2>View section</h2> -->
             <div id="viewcontent">
                 <div id="viewheader">
-                    <h1 id="viewname">Your name</h1>
+                    <h1 id="viewname">Patricio Légumes</h1>
                     <h2 id="viewjob">Vendeur de légumes</h2>
-
                     <hr>
-
                     <h3>Contact information</h3>
                     <div id="viewcontactinfo">
                         <div class="onlinepair">
@@ -93,49 +73,29 @@
                             <p id="viewphone">00.00.00.00.00</p>
                         </div>
                     </div>
-
                     <h3>Description</h3>
-                    <p id="viewdescription" class="justify">Vendeur de légumes dynamique et passionné par les produits frais, avec une solide expérience en accueil client, conseil et mise en valeur des produits. Polyvalent, j’assure la réception, le tri, la présentation et la vente directe en marché ou en magasin, tout en respectant les normes d’hygiène et de qualité. À l’écoute des clients, je propose des conseils personnalisés pour favoriser les ventes et fidéliser la clientèle.</p>
-
+                    <p id="viewdescription" class="justify">Vendeur de légumes <strong>dynamique et passionné</strong> par les produits frais, avec une solide expérience en accueil client, conseil et mise en valeur des produits. Polyvalent, j’assure la réception, le tri, la présentation et la vente directe en marché ou en magasin, tout en respectant les normes d’hygiène et de qualité. À l’écoute des clients, je propose des conseils personnalisés pour favoriser les ventes et fidéliser la clientèle.</p>
                     <h3>Skills</h3>
                     <small><ul id="skillsul">
-                        <li>yeslife</li>
-                        <li>yeslife</li>
-                        <li>yeslife</li>
+                        <li>Verdures</li>
+                        <li>Fruits</li>
+                        <li>Utilisation de la bêche</li>
                     </ul></small>
-
                     <hr>
-
                 </div>
-
                 <div id="viewcenter">
                     <h2>Experiences</h2>
                     <div id="viewexperiences">
-                        <div class="view_experience_template">
-                            <h3 id="job_">Senior manager - Freelance</h3>
-                            <div class="wherewhen">
-                                <p id="where_">NOOB Fundation Inc</p><p>|</p>
-                                <p><small id="from_">1999</small> - <small id="to_">2021</small></p>
-                            </div>
-                            <p id="content_" class="justify">Pilote stratégique d’un collectif d’innovation numérique underground, le NOOB Foundation Inc. — fondé en 1999 dans les sous-sols d’un cybercafé de Zurich — a révolutionné l’approche du travail libre en réinventant la notion de “freelance” comme mouvement culturel.</p>
-                        </div>
-                        <div class="view_experience_template">
-                            <h3 id="job_">Senior manager - Freelance</h3>
-                            <div class="wherewhen">
-                                <p id="where_">NOOB Fundation Inc</p><p>|</p>
-                                <p><small id="from_">1999</small> - <small id="to_">2021</small></p>
-                            </div>
-                            <p id="content_" class="justify">Pilote stratégique d’un collectif d’innovation numérique underground, le NOOB Foundation Inc. — fondé en 1999 dans les sous-sols d’un cybercafé de Zurich — a révolutionné l’approche du travail libre en réinventant la notion de “freelance” comme mouvement culturel.</p>
+                        <div id="viewexperience_0" class="view_experience_template">
+                            <h3>Senior manager - Freelance</h3>
+                            <p class="subtitle">NOOB Fundation Inc | <small>1999 - 2021</small></p>
+                            <p class="justify">Pilote stratégique d’un collectif d’innovation numérique underground, le NOOB Foundation Inc. — fondé en 1999 dans les sous-sols d’un cybercafé de Zurich — a révolutionné l’approche du travail libre en réinventant la notion de “freelance” comme mouvement culturel.</p>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-
     </content>
-
 </body>
 <script src="script.js"></script>
 </html>

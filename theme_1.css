@@ -1,3 +1,7 @@
+:root {
+    --deep-blue: rgb(48, 89, 122);
+}
+
 #viewcontent {
     max-width: 794px;
     font-family: Arial, Helvetica, sans-serif;
@@ -50,7 +54,7 @@
 }
 
 #skillsul li {
-    background-color: rgb(48, 89, 122);
+    background-color: var(--deep-blue);
     padding: 4px;
     padding-left: 8px;
     padding-right: 8px;
@@ -58,19 +62,34 @@
     border-radius: 4px;
 }
 
-.wherewhen * {
-    margin: 0px;
+#viewexperiences {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .view_experience_template {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-
+    border-left-style: solid;
+    padding-left: 8px;
+    border-radius: 4px;
+    border-color: var(--deep-blue);
 }
 
 .view_experience_template h3 {
+    margin: 0px;
     margin-bottom: 4px;
+}
+
+.view_experience_template p {
+
+    margin-bottom: 0px;
+}
+
+.subtitle {
+    margin: 0px;
 }
 
 .wherewhen {
